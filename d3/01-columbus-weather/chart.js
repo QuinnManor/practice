@@ -29,7 +29,13 @@ async function drawLineChart() { // async functions only execute code when promi
             .attr("width", wrapperDimensions.width) // setting the width of our svg element (chaining)
             .attr("height", wrapperDimensions.height) // setting the height of our svg element (chaining)
 
-    console.log(svg)
+    // creating our bound container, inside of our SVG element
+    const bound = wrapper.append("g") // adding an SVG element within SVG wrapper called "g" (this is for our chart)
+        .style("transform",
+                `translate(
+                    ${wrapperDimensions.margin.left}px,
+                    ${wrapperDimensions.margin.top}px
+                )`)
 }
 
 drawLineChart()
