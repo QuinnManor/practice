@@ -2,8 +2,8 @@ async function drawLineChart() { // async functions only execute code when promi
     const dataset = await d3.json("./cbus_weather.json") // await means function won't run until dataset is defined
 
     // defining accessor functions to read in specific values for our chart
-    const dateParser = d => d3.timeParse("$Y-$m-$d") // function to parse date
-    const xDateAccessor = d => dateParser(d.date) // function to access parsed date for each day
+    // const dateParser = d => d3.timeParse("$Y-$m-$d") // function to parse date
+    const xDateAccessor = d => d.date // function to access parsed date for each day
     const yMaxTempAccessor = d => d.maxTemp // function to access max temp for each day
 
     // wrapper container dimensions, contains entire chart, every element (SVG) is contained here
@@ -58,6 +58,15 @@ async function drawLineChart() { // async functions only execute code when promi
       .attr("y", freezingTemperaturePlacement)
       .attr("height", wrapperDimensions.boundHeight - freezingTemperaturePlacement)
       .attr("fill", "#e0f3f3") // changing the color to a light blue to denote freezing temps
+
+    // creating the line for our chart
+    const chartLine = d3.line() // converts data into a data-string to chart
+        .x(d => xDateScale(xDateAccessor(d))) // chart our scaled date object
+        .y(d => yMaxTempScale(yMaxTempAccessor(d))) // chart our scaled max temps for each day
+
+    // adding our line to the path element of our bounds
+    const line = bound.append("path") // adding to our wrapper
+        .attr("d", chartLine(dataset)) // charts our line in the wrapper
 }
 
 drawLineChart()
