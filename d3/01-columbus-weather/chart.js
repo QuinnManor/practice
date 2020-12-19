@@ -36,6 +36,13 @@ async function drawLineChart() { // async functions only execute code when promi
                     ${wrapperDimensions.margin.left}px,
                     ${wrapperDimensions.margin.top}px
                 )`)
+
+    // scaling our y-axis
+    // we'll need to convert our metrics into the pixel space
+    // doing this will prevent our margins from looking funky
+    const yMaxTempScale = d3.scaleLinear() // this creates our linear scale
+        .domain(d3.extent(dataset, yMaxTempAccessor)) // sets min and max temp for our y-axis
+        .range([wrapperDimensions.boundHeight, 0]) // sets min and max scale on chart
 }
 
 drawLineChart()
