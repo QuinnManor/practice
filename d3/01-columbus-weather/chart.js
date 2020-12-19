@@ -67,6 +67,9 @@ async function drawLineChart() { // async functions only execute code when promi
     // adding our line to the path element of our bounds
     const line = bound.append("path") // adding to our wrapper
         .attr("d", chartLine(dataset)) // charts our line in the wrapper
+        .attr("fill", "none")
+        .attr("stroke", "#af9358")
+        .attr("stroke-width", 2)
 }
 
 drawLineChart()
