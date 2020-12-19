@@ -52,6 +52,12 @@ async function drawLineChart() { // async functions only execute code when promi
       .attr("y", freezingTemperaturePlacement)
       .attr("height", wrapperDimensions.boundHeight - freezingTemperaturePlacement)
       .attr("fill", "#e0f3f3") // changing the color to a light blue to denote freezing temps
+
+    // scaling our x-axis
+    // we'll need to scale our date objects
+    const xDateScale = d3.scaleTime() // d3's way to scale date objects
+        .domain(d3.extent(dataset, xDateAccessor)) // min and max dates
+        .range([0, wrapperDimensions.boundWidth]) // setting the min and max width on our chart
 }
 
 drawLineChart()
