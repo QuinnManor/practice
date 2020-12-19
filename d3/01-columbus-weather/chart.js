@@ -43,6 +43,15 @@ async function drawLineChart() { // async functions only execute code when promi
     const yMaxTempScale = d3.scaleLinear() // this creates our linear scale
         .domain(d3.extent(dataset, yMaxTempAccessor)) // sets min and max temp for our y-axis
         .range([wrapperDimensions.boundHeight, 0]) // sets min and max scale on chart
+
+    // enabling our chart to display temperatures below freezing
+    const freezingTemperaturePlacement = yMaxTempScale(32) // scales our data's freezing point
+    const freezingTemperatures = bound.append("rect") // rectangle, build in SVG, covering all temps below freezing
+      .attr("x", 0)
+      .attr("width", wrapperDimensions.boundWidth)
+      .attr("y", freezingTemperaturePlacement)
+      .attr("height", wrapperDimensions.boundHeight - freezingTemperaturePlacement)
+      .attr("fill", "#e0f3f3") // changing the color to a light blue to denote freezing temps
 }
 
 drawLineChart()
