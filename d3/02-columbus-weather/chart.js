@@ -1,4 +1,4 @@
-async function drawLineChart() { // async functions only execute code when promise is fulfilled
+async function drawScatterPlot() { // async functions only execute code when promise is fulfilled
     const dataset = await d3.json("../data/cbus_weather.json") // await means function won't run until dataset is defined
     
     // defining accessor functions to read in specific values for our chart
@@ -54,16 +54,24 @@ async function drawLineChart() { // async functions only execute code when promi
     // scaling our y-axis
     // we'll need to convert our metrics into the pixel space
     // doing this will prevent our margins from looking funky
-    const yMaxHumidityScale = d3.scaleLinear() // this creates our linear scale
+    const yHumidityScale = d3.scaleLinear() // this creates our linear scale
         .domain(d3.extent(dataset, yHumidityAccessor)) // sets min and max temp for our y-axis
         .range([wrapperDimensions.boundHeight, 0]) // sets min and max scale on chart
         .nice() // this will round our humidity
 
     // now let's create our scatterplot!
-    bound.append("circle") // indicates a scatterplot
-        .attr("cx", wrapperDimensions.boundWidth / 2) // cx sets center at x coordinates
-        .attr("cy", wrapperDimensions.boundHeight / 2) // cy sets our y coordinates
-        .attr("r", 5) // sets the plots radius
+     function drawDots(dataset, color) {
+        const dots = bound.selectAll("circle").data(dataset) // indicates a scatterplot, grabs data
+
+        dots.join("circle") // join works similar to .enter, .append, .merge, updates our graph with new data
+            .attr("cx", d => xheatIndexScale(xheatIndexAccessor(d))) // cx sets x-axis data
+            .attr("cy", d => yHumidityScale(yHumidityAccessor(d))) // cy sets y-axis data
+            .attr("r", 5) // radius of each circle
+            .attr("fill", color) // color of each circle
+        }
+
+    // executing our function to draw dots on our chart
+    drawDots(dataset, "darkgrey")
 }
 
-drawLineChart()
+drawScatterPlot()
