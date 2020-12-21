@@ -3,7 +3,7 @@ async function drawLineChart() { // async functions only execute code when promi
     
     // defining accessor functions to read in specific values for our chart
     const xheatIndexAccessor = d => d.heatIndex // function to access parsed date for each day
-    const yhumidityAccessor = d => d.humidity // function to access max temp for each day
+    const yHumidityAccessor = d => d.humidity // function to access max temp for each day
 
     // creating a scatterplot means we'll have a square chart
     const width = d3.min([ // either use window width/height, set square dimensions to that
@@ -43,6 +43,21 @@ async function drawLineChart() { // async functions only execute code when promi
                     ${wrapperDimensions.margin.left}px,
                     ${wrapperDimensions.margin.top}px
                 )`)
+
+    // scaling our x-axis
+    // we'll need to scale our date objects
+    const xheatIndexScale = d3.scaleLinear() // d3's way to scale linear numbers
+        .domain(d3.extent(dataset, xheatIndexAccessor)) // min and max dates
+        .range([0, wrapperDimensions.boundWidth]) // setting the min and max width on our chart
+        .nice() // this will round our heat indexes
+
+    // scaling our y-axis
+    // we'll need to convert our metrics into the pixel space
+    // doing this will prevent our margins from looking funky
+    const yMaxHumidityScale = d3.scaleLinear() // this creates our linear scale
+        .domain(d3.extent(dataset, yHumidityAccessor)) // sets min and max temp for our y-axis
+        .range([wrapperDimensions.boundHeight, 0]) // sets min and max scale on chart
+        .nice() // this will round our humidity
 }
 
 drawLineChart()
