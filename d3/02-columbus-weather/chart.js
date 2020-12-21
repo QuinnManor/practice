@@ -58,6 +58,12 @@ async function drawLineChart() { // async functions only execute code when promi
         .domain(d3.extent(dataset, yHumidityAccessor)) // sets min and max temp for our y-axis
         .range([wrapperDimensions.boundHeight, 0]) // sets min and max scale on chart
         .nice() // this will round our humidity
+
+    // now let's create our scatterplot!
+    bound.append("circle") // indicates a scatterplot
+        .attr("cx", wrapperDimensions.boundWidth / 2) // cx sets center at x coordinates
+        .attr("cy", wrapperDimensions.boundHeight / 2) // cy sets our y coordinates
+        .attr("r", 5) // sets the plots radius
 }
 
 drawLineChart()
