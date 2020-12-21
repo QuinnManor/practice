@@ -1,8 +1,7 @@
 async function drawLineChart() { // async functions only execute code when promise is fulfilled
     const dataset = await d3.json("../data/cbus_weather.json") // await means function won't run until dataset is defined
 
-    // defining accessor functions to read in specific values for our chart
-    // const dateParser = d => d3.timeParse("$Y-$m-$d") // function to parse date
+    // defining accessor functions to read in specific values for our char
     const xDateAccessor = d => d.date // function to access parsed date for each day
     const yMaxTempAccessor = d => d.maxTemp // function to access max temp for each day
 
