@@ -70,6 +70,13 @@ async function drawLineChart() { // async functions only execute code when promi
         .attr("fill", "none")
         .attr("stroke", "#af9358")
         .attr("stroke-width", 2)
+
+    // adding our axes
+    const yMaxTempAxisGenerator = d3.axisLeft() // creates axis elements for our chart
+        .scale(yMaxTempScale)
+
+    const yMaxTempAxis = bound.append("g") // g-element to hold our axis elements
+        .call(yMaxTempAxisGenerator) // .call executes our generator function
 }
 
 drawLineChart()
