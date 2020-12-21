@@ -72,6 +72,15 @@ async function drawLineChart() { // async functions only execute code when promi
         .attr("stroke-width", 2)
 
     // adding our axes
+    // x-axis
+    const xDateAxisGenerator = d3.axisBottom() // creates axis elements for our chart
+        .scale(xDateScale)
+
+    const xDateAxis = bound.append("g") // g-element to hold our axis elements
+        .call(xDateAxisGenerator) // .call executes our generator function
+        .style("transform", `translateY(${wrapperDimensions.boundHeight}px)`)
+
+    // y-axis
     const yMaxTempAxisGenerator = d3.axisLeft() // creates axis elements for our chart
         .scale(yMaxTempScale)
 
