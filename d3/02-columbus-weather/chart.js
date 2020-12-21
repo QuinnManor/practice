@@ -14,8 +14,18 @@ async function drawLineChart() { // async functions only execute code when promi
     // define wrapper dimensions using the set width above
     let wrapperDimensions = { // assures square dimensions for our wrapper
         width: width,
-        height: width
+        height: width,
+        margin: {
+            top: 10,
+            right: 10,
+            bottom: 50,
+            left: 50,
+      },
     }
+
+    // calculating the width and height of our bound
+    wrapperDimensions.boundWidth = wrapperDimensions.width - wrapperDimensions.margin.left - wrapperDimensions.margin.right
+    wrapperDimensions.boundHeight = wrapperDimensions.width - wrapperDimensions.margin.top - wrapperDimensions.margin.bottom
 }
 
 drawLineChart()
