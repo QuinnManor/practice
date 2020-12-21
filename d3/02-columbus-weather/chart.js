@@ -72,6 +72,22 @@ async function drawScatterPlot() { // async functions only execute code when pro
 
     // executing our function to draw dots on our chart
     drawDots(dataset, "darkgrey")
+
+    // adding our axes
+    // x-axis
+    const xHeatIndexAxisGenerator = d3.axisBottom() // creates axis elements for our chart
+        .scale(xheatIndexScale)
+
+    const xHeatIndexAxis = bound.append("g") // g-element to hold our axis elements
+        .call(xHeatIndexAxisGenerator) // .call executes our generator function
+        .style("transform", `translateY(${wrapperDimensions.boundHeight}px)`)
+
+    const xHeatIndexLabel = xHeatIndexAxis.append("text") // allows us to add labels as text
+        .attr("x", wrapperDimensions.boundWidth / 2)
+        .attr("y", wrapperDimensions.margin.bottom - 10)
+        .attr("fill", "black")
+        .style("font-size", "1.4em")
+        .html("Heat Index")
 }
 
 drawScatterPlot()
