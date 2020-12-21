@@ -26,6 +26,23 @@ async function drawLineChart() { // async functions only execute code when promi
     // calculating the width and height of our bound
     wrapperDimensions.boundWidth = wrapperDimensions.width - wrapperDimensions.margin.left - wrapperDimensions.margin.right
     wrapperDimensions.boundHeight = wrapperDimensions.width - wrapperDimensions.margin.top - wrapperDimensions.margin.bottom
+
+// creating our wrapper container
+    // contains our entire svg element
+    const wrapper = d3.select("#wrapper") // selects the div in our html file with an id of 'wrapper'
+    // adding our scalable vector graphic (SVG)/chart
+        .append("svg") // adding our (SVG) element to our wrapper (chaining)
+            .attr("width", wrapperDimensions.width) // setting the width of our svg element (chaining)
+            .attr("height", wrapperDimensions.height) // setting the height of our svg element (chaining)
+
+    // creating our bound container, inside of our SVG element
+    // contains only our data elements
+    const bound = wrapper.append("g") // adding an SVG element within SVG wrapper called "g" (this is for our chart)
+        .style("transform",
+                `translate(
+                    ${wrapperDimensions.margin.left}px,
+                    ${wrapperDimensions.margin.top}px
+                )`)
 }
 
 drawLineChart()
