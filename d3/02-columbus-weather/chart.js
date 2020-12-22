@@ -71,7 +71,7 @@ async function drawScatterPlot() { // async functions only execute code when pro
         }
 
     // executing our function to draw dots on our chart
-    drawDots(dataset, "darkgrey")
+    drawDots(dataset, "skyblue")
 
     // adding our axes
     // x-axis
