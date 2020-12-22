@@ -88,6 +88,23 @@ async function drawScatterPlot() { // async functions only execute code when pro
         .attr("fill", "black")
         .style("font-size", "1.4em")
         .html("Heat Index")
+
+    // y-axis
+    const yHumidityAxisGenerator = d3.axisLeft() // creates axis elements for our chart
+        .scale(yHumidityScale)
+        .ticks(4)
+
+    const yHumidityAxis = bound.append("g") // g-element to hold our axis elements
+        .call(yHumidityAxisGenerator) // .call executes our generator function
+
+    const yHumidityLabel = yHumidityAxis.append("text") // allows us to add labels as text
+        .attr("x", -wrapperDimensions.boundHeight / 2)
+        .attr("y", -wrapperDimensions.margin.left + 20)
+        .attr("fill", "black")
+        .style("font-size", "1.4em")
+        .text("Humidity")
+        .style("transform", "rotate(-90deg)")
+        .style("text-anchor", "middle")
 }
 
 drawScatterPlot()
