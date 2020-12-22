@@ -1,8 +1,9 @@
 async function drawHistogram() { // async functions only execute code when promise is fulfilled
     const dataset = await d3.json("../data/cbus_weather.json") // await means function won't run until dataset is defined
     
-    // since a histogram will have a single metric, we'll make one accessor
+    // since a histogram will have a single metric, we'll grab that along with the shape of our data
     const metricAccessor = d => d.humidity
+    const yLengthAccessor = d => d.length // gathering the shape of our data
 
     // creating histogram width
     const width = 600
@@ -55,6 +56,12 @@ async function drawHistogram() { // async functions only execute code when promi
 
     // create our bins
     const bins = binsGenerator(dataset)
+
+    // creating our y-axis scale
+    const yLengthScale = d3.scaleLinear()
+        .domain(d3.extent(dataset, yLengthAccessor))
+        .range([wrapperDimensions.boundHeight, 0])
+        .nice() // round out our bars
 }
 
 drawHistogram()
