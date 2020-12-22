@@ -39,6 +39,22 @@ async function drawHistogram() { // async functions only execute code when promi
                     ${wrapperDimensions.margin.left}px,
                     ${wrapperDimensions.margin.top}px
                 )`)
+
+    // scaling our data
+    const metricScale = d3.scaleLinear()
+        .domain(d3.extent(dataset, metricAccessor))
+        .range([0, wrapperDimensions.boundWidth])
+        .nice()
+
+    // generating our bins
+    const binsGenerator = d3.histogram() // allows us to generate bins for our histogram
+        .domain(metricScale.domain()) // tell the range of numbers we'll cover
+        .value(metricAccessor) // tells our generator how to get the humidity value
+        .thresholds(12) // the number of bins to create (0 index, this is 13)
+        // .thresholds will decided optimal number of bins, takes input as suggestion
+
+    // create our bins
+    const bins = binsGenerator(dataset)
 }
 
 drawHistogram()
