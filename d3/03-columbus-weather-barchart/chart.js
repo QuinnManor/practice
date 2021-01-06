@@ -3,7 +3,7 @@ async function drawHistogram() { // async functions only execute code when promi
     
     // since a histogram will have a single metric, we'll grab that along with the shape of our data
     const metricAccessor = d => d.humidity
-    const yLengthAccessor = d => d.length // gathering the shape of our data
+    const yAccessor = d => d.length // gathering the shape of our data
 
     // creating histogram width
     const width = 600
@@ -42,14 +42,14 @@ async function drawHistogram() { // async functions only execute code when promi
                 )`)
 
     // scaling our data
-    const metricScale = d3.scaleLinear()
+    const xScale = d3.scaleLinear()
         .domain(d3.extent(dataset, metricAccessor))
         .range([0, wrapperDimensions.boundWidth])
         .nice()
 
     // generating our bins
     const binsGenerator = d3.histogram() // allows us to generate bins for our histogram
-        .domain(metricScale.domain()) // tell the range of numbers we'll cover
+        .domain(xScale.domain()) // tell the range of numbers we'll cover
         .value(metricAccessor) // tells our generator how to get the humidity value
         .thresholds(12) // the number of bins to create (0 index, this is 13)
         // .thresholds will decided optimal number of bins, takes input as suggestion
@@ -58,8 +58,8 @@ async function drawHistogram() { // async functions only execute code when promi
     const bins = binsGenerator(dataset)
 
     // creating our y-axis scale
-    const yLengthScale = d3.scaleLinear()
-        .domain(d3.extent(dataset, yLengthAccessor))
+    const yScale = d3.scaleLinear()
+        .domain(d3.extent(dataset, yAccessor))
         .range([wrapperDimensions.boundHeight, 0])
         .nice() // round out our bars
 }
