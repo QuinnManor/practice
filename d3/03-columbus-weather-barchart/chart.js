@@ -62,6 +62,25 @@ async function drawHistogram() { // async functions only execute code when promi
         .domain(d3.extent(dataset, yAccessor))
         .range([wrapperDimensions.boundHeight, 0])
         .nice() // round out our bars
+
+    // create element to contain bins
+    const binsGroup = bound.append("g")
+
+    // bind each data point to the binsGroup
+    const binGroups = binsGroup.selectAll("g")
+        .data(bins)
+        .enter().append("g") // creates a g element for each bin
+
+    // creating histogram padding
+    const barPadding = 1
+
+    // histogram padding
+    const barRects = binGroups.append("rect")
+        .attr("x", d => xScale(d.x0) + barPadding / 2)
+        .attr("y", d => yAccessor(d))
+        .attr("width", d => d3.max([0, xScale(d.x1) - xScale(d.x0) - barPadding]))
+        .attr("height", d => wrapperDimensions.boundHeight - yAccessor(d))
+        .attr("fill", "cornflowerblue")
 }
 
 drawHistogram()
