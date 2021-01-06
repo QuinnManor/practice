@@ -92,6 +92,21 @@ async function drawHistogram() { // async functions only execute code when promi
             .attr("fill", "darkgrey")
             .style("font-size", "12px")
             .style("font-family", "sans-serif")
+
+    // add x-axis
+    const xAxisGenerator = d3.axisBottom()
+        .scale(xScale)
+
+    const xAxis = bound.append("g")
+        .call(xAxisGenerator)
+            .style("transform", `translateY(${wrapperDimensions.boundHeight}px)`)
+
+    const xAxisLabel = xAxis.append("text")
+        .attr("x", wrapperDimensions.boundWidth / 2)
+        .attr("y", wrapperDimensions.margin.bottom - 10)
+        .attr("fill", "black")
+        .style("font-size", "1.4em")
+        .text("Humidity")
 }
 
 drawHistogram()
