@@ -81,6 +81,17 @@ async function drawHistogram() { // async functions only execute code when promi
         .attr("width", d => d3.max([0, xScale(d.x1) - xScale(d.x0) - barPadding]))
         .attr("height", d => wrapperDimensions.boundHeight - yAccessor(d))
         .attr("fill", "cornflowerblue")
+
+    // applying labels
+    const barText = binGroups.filter(yAccessor) // filter removes any bin containing 0s
+        .append("text") // svg label to write text
+            .attr("x", d => xScale(d.x0) + (xScale(d.x1) - xScale(d.x0) / 2))
+            .attr("y", d => yAccessor(d) - 5)
+            .text(yAccessor) // display count of days
+            .style("text-anchor", "middle") // align number of days
+            .attr("fill", "darkgrey")
+            .style("font-size", "12px")
+            .style("font-family", "sans-serif")
 }
 
 drawHistogram()
